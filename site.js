@@ -64,22 +64,9 @@ function sampleCanvas(xcanvas) {
     return pts;
 }
 
-function draw(fx, fy) {
-    if (!loaded) return;
-
-    var outputw = 640;
-
-    if (def == 1) {
-        var pts = sampleCanvas(fcanvas);
-    }
-    if (def == 2) {
-        outputw = 2700;
-        var pts = sampleCanvas(bcanvas);
-    }
-
+function compute_points(pts) {
     var mappings = [];
 
-    document.getElementById('status').innerHTML = 'computing points...';
     // Compute all of the points
     for (var i = 0; i < pts.length; i++) {
         mappings.push({
@@ -119,7 +106,10 @@ function draw(fx, fy) {
     var xoffset = -minx;
     var yoffset = -miny;
 
-    document.getElementById('status').innerHTML = 'drawing points...';
+    return mappings;
+}
+
+function draw_points(mappings) {
     // Finally draw the points
     for (var i = 0; i < mappings.length; i++) {
         ctx.fillStyle = mappings[i].color;
@@ -128,7 +118,36 @@ function draw(fx, fy) {
           ~~((yoffset + mappings[i].coord[1]) / scale_denom),
           block, block);
     }
-    document.getElementById('status').innerHTML = '';
+}
+
+function draw(fx, fy) {
+    if (!loaded) return;
+
+    var outputw = 640;
+
+    if (def == 1) {
+        var pts = sampleCanvas(fcanvas);
+    }
+    if (def == 2) {
+        outputw = 2700;
+        var pts = sampleCanvas(bcanvas);
+    }
+
+    document.getElementById('status').innerHTML = 'computing points...';
+    console.log('computing points...', pts);
+    setTimeout(function() {
+        mappings = compute_points(pts);
+
+        document.getElementById('status').innerHTML = 'drawing points...';
+        console.log('drawing points...', mappings);
+
+        setTimeout(function() {
+            draw_points(mappings);
+
+            document.getElementById('status').innerHTML = '';
+            console.log('done');
+        , 10);
+    }, 10);
 }
 
 function load_and_draw() {
