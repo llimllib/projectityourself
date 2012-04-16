@@ -144,7 +144,7 @@ function draw(fx, fy) {
         points = compute_points(pts, outputw);
 
         document.getElementById('status').innerHTML = 'drawing points...';
-        console.log('drawing points...', mappings);
+        console.log('drawing points...', points);
 
         setTimeout(function() {
             draw_points(points);
