@@ -146,7 +146,7 @@ function draw(fx, fy) {
 
             document.getElementById('status').innerHTML = '';
             console.log('done');
-        , 10);
+        }, 10);
     }, 10);
 }
 
