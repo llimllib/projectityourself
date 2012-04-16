@@ -128,6 +128,7 @@ function draw(fx, fy) {
           ~~((yoffset + mappings[i].coord[1]) / scale_denom),
           block, block);
     }
+    document.getElementById('status').innerHTML = '';
 }
 
 function load_and_draw() {
