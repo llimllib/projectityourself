@@ -106,10 +106,10 @@ function compute_points(pts, outputw) {
     var xoffset = -minx;
     var yoffset = -miny;
 
-    return mappings;
+    return [mappings, xoffset, yoffset];
 }
 
-function draw_points(mappings) {
+function draw_points(mappings, xoffset, yoffset) {
     // Finally draw the points
     for (var i = 0; i < mappings.length; i++) {
         ctx.fillStyle = mappings[i].color;
@@ -136,13 +136,16 @@ function draw(fx, fy) {
     document.getElementById('status').innerHTML = 'computing points...';
     console.log('computing points...', pts);
     setTimeout(function() {
-        mappings = compute_points(pts, outputw);
+        map_and_offset = compute_points(pts, outputw);
+        mappings = map_and_offset[0];
+        xoffset = map_and_offset[1];
+        yoffset = map_and_offset[2];
 
         document.getElementById('status').innerHTML = 'drawing points...';
         console.log('drawing points...', mappings);
 
         setTimeout(function() {
-            draw_points(mappings);
+            draw_points(mappings, xoffset, yoffset);
 
             document.getElementById('status').innerHTML = '';
             console.log('done');
