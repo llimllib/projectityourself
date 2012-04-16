@@ -110,7 +110,7 @@ function compute_points(pts, outputw) {
         "mappings": mappings,
         "xoffset": xoffset,
         "yoffset": yoffset,
-        "scale_denom", scale_denom
+        "scale_denom": scale_denom
     };
 }
 
