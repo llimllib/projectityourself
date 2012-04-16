@@ -106,16 +106,21 @@ function compute_points(pts, outputw) {
     var xoffset = -minx;
     var yoffset = -miny;
 
-    return [mappings, xoffset, yoffset];
+    return {
+        "mappings": mappings,
+        "xoffset": xoffset,
+        "yoffset": yoffset,
+        "scale_denom", scale_denom
+    };
 }
 
-function draw_points(mappings, xoffset, yoffset) {
+function draw_points(points) {
     // Finally draw the points
-    for (var i = 0; i < mappings.length; i++) {
-        ctx.fillStyle = mappings[i].color;
+    for (var i = 0; i < points.mappings.length; i++) {
+        ctx.fillStyle = points.mappings[i].color;
         ctx.fillRect(
-          ~~((xoffset + mappings[i].coord[0]) / scale_denom),
-          ~~((yoffset + mappings[i].coord[1]) / scale_denom),
+          ~~((points.xoffset + points.mappings[i].coord[0]) / points.scale_denom),
+          ~~((points.yoffset + points.mappings[i].coord[1]) / points.scale_denom),
           block, block);
     }
 }
@@ -136,16 +141,13 @@ function draw(fx, fy) {
     document.getElementById('status').innerHTML = 'computing points...';
     console.log('computing points...', pts);
     setTimeout(function() {
-        map_and_offset = compute_points(pts, outputw);
-        mappings = map_and_offset[0];
-        xoffset = map_and_offset[1];
-        yoffset = map_and_offset[2];
+        points = compute_points(pts, outputw);
 
         document.getElementById('status').innerHTML = 'drawing points...';
         console.log('drawing points...', mappings);
 
         setTimeout(function() {
-            draw_points(mappings, xoffset, yoffset);
+            draw_points(points);
 
             document.getElementById('status').innerHTML = '';
             console.log('done');
