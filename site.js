@@ -64,7 +64,7 @@ function sampleCanvas(xcanvas) {
     return pts;
 }
 
-function compute_points(pts) {
+function compute_points(pts, outputw) {
     var mappings = [];
 
     // Compute all of the points
@@ -136,7 +136,7 @@ function draw(fx, fy) {
     document.getElementById('status').innerHTML = 'computing points...';
     console.log('computing points...', pts);
     setTimeout(function() {
-        mappings = compute_points(pts);
+        mappings = compute_points(pts, outputw);
 
         document.getElementById('status').innerHTML = 'drawing points...';
         console.log('drawing points...', mappings);
